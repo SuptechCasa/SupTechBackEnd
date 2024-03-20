@@ -27,14 +27,19 @@ public class EtudiantController extends HttpServlet{
 		List<Etudiant> etudiants= this.serviceEtudiant.getAllEtudiants();
 		ObjectMapper mapper=new ObjectMapper();
 		String jsonEtudiant=mapper.writeValueAsString(etudiants);
-		//System.out.println(jsonEtudiant);
 		resp.getWriter().write(jsonEtudiant);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		String jsonEtudiant="";
+		String line;
+		while((line=req.getReader().readLine()) != null) {
+			jsonEtudiant+=line.trim();
+		}
+		ObjectMapper mapper=new ObjectMapper();
+		Etudiant etudiant=mapper.readValue(jsonEtudiant, Etudiant.class);
+		this.serviceEtudiant.addEtudiant(etudiant);
 	}
 
 	@Override
