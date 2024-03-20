@@ -17,11 +17,12 @@ import service.ServiceEtudiant;
 public class EtudiantController extends HttpServlet{
 	ServiceEtudiant serviceEtudiant;
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doDelete(req, resp);
+	public void init() throws ServletException {
+		this.serviceEtudiant=new ServiceEtudiant();
+		this.serviceEtudiant.addEtudiant(new Etudiant(1L, "Hassan", 23));
+		this.serviceEtudiant.addEtudiant(new Etudiant(2L, "Sara", 24));
+		this.serviceEtudiant.addEtudiant(new Etudiant(3L, "Meriem", 23));
 	}
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Etudiant> etudiants= this.serviceEtudiant.getAllEtudiants();
@@ -29,7 +30,6 @@ public class EtudiantController extends HttpServlet{
 		String jsonEtudiant=mapper.writeValueAsString(etudiants);
 		resp.getWriter().write(jsonEtudiant);
 	}
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String jsonEtudiant="";
@@ -41,20 +41,14 @@ public class EtudiantController extends HttpServlet{
 		Etudiant etudiant=mapper.readValue(jsonEtudiant, Etudiant.class);
 		this.serviceEtudiant.addEtudiant(etudiant);
 	}
-
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		super.doPut(req, resp);
 	}
-
 	@Override
-	public void init() throws ServletException {
-		this.serviceEtudiant=new ServiceEtudiant();
-		this.serviceEtudiant.addEtudiant(new Etudiant(1L, "Hassan", 23));
-		this.serviceEtudiant.addEtudiant(new Etudiant(2L, "Sara", 24));
-		this.serviceEtudiant.addEtudiant(new Etudiant(3L, "Meriem", 23));
-
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doDelete(req, resp);
 	}
-
 }
