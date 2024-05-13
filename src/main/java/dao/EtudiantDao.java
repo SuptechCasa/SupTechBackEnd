@@ -14,6 +14,7 @@ public List<Etudiant> getAllEtudiants(){
 	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 	Session session = sessionFactory.openSession();
 	List<Etudiant> etudiants= session.createQuery("from Etudiant", Etudiant.class).list();
+	sessionFactory.close();
 	return etudiants;
 }
 
@@ -24,6 +25,17 @@ public Etudiant addEtudiant(Etudiant etudiant) {
 	session.persist(etudiant);
 	transaction.commit();
 	session.close();
+	sessionFactory.close();
 	return etudiant;
+}
+
+public void deleteEtudiant(Etudiant etudiant) {
+	SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+	Session session = sessionFactory.openSession();
+	Transaction transaction=session.beginTransaction();
+	session.remove(etudiant);
+	transaction.commit();
+	session.close();
+	sessionFactory.close();
 }
 }

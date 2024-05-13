@@ -20,4 +20,8 @@ public List<Etudiant> getAllEtudiants(){
 public Etudiant addEtudiant(Etudiant etudiant) {
 	return etudiantDao.addEtudiant(etudiant);
 }
+
+public void deleteEtudiant(Etudiant etudiant) {
+	etudiantDao.deleteEtudiant(etudiant);
+}
 }

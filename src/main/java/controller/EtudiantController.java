@@ -52,7 +52,16 @@ public class EtudiantController extends HttpServlet{
 	}
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doDelete(req, resp);
+		
+		resp.setHeader("Access-Control-Allow-Origin", "*"); // Autoriser les requêtes depuis n'importe quelle origine
+        String jsonEtudiant="";
+		String line;
+		while((line=req.getReader().readLine()) != null) {
+			jsonEtudiant+=line.trim();
+		}
+		System.out.println(jsonEtudiant);
+		ObjectMapper mapper=new ObjectMapper();
+		Etudiant etudiant=mapper.readValue(jsonEtudiant, Etudiant.class);
+		etudiantService.deleteEtudiant(etudiant);
 	}
 }
